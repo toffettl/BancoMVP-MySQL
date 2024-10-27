@@ -59,6 +59,29 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
+        public bool mudarSenha(string novaSenha)
+        {
+            try
+            {
+                using (MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor))
+                {
+                    MysqlConexaoBanco.Open();
+                    string update = "update usuario set senha = @NovaSenha where idUsuario = @Id;";
+                    MySqlCommand comandoSql = new MySqlCommand(update, MysqlConexaoBanco);
+                    comandoSql.Parameters.AddWithValue("@NovaSenha", novaSenha);
+                    comandoSql.Parameters.AddWithValue("@Id", Id);
+
+                    comandoSql.ExecuteNonQuery();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - Método mudarNome: " + ex.Message);
+                return false;
+            }
+        }
+
         public bool confirmarSenha()
         {
             try

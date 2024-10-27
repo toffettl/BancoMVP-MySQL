@@ -51,5 +51,43 @@ namespace Banco_MVP_MySQL_.Presenters
                 return false;
             }
         }
+
+        public bool editarSenha()
+        {
+            model.Id = view.idUsuario;
+            model.Senha = view.txtSenhaEditar.Text;
+            if (!string.IsNullOrEmpty(model.Senha))
+            {
+                if(view.txtNovaSenha.Text == view.txtConfirmarNovaSenha.Text)
+                {
+                    if (model.confirmarSenha())
+                    {
+                        if (model.mudarSenha(view.txtNovaSenha.Text))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Senha incorreta!");
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Confirmação de senha errada!");
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Favor, preencha todos os campos corretamente!");
+                return false;
+            }
+        }
     }
 }

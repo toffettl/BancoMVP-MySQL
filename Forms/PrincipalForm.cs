@@ -25,6 +25,9 @@ namespace Banco_MVP_MySQL_.Forms
         public TextBox txtSenhaEditar;
         public Button btnEditarNome;
         public Label lblId;
+        public TextBox txtNovaSenha;
+        public TextBox txtConfirmarNovaSenha;
+        public Button btnEditarSenha;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
@@ -38,7 +41,8 @@ namespace Banco_MVP_MySQL_.Forms
 
             txtSenhaEditar = new TextBox()
             {
-                Location = new Point(0,30),
+                Location = new Point(300,300),
+                Text = "Senha"
             };
             Controls.Add(txtSenhaEditar);
 
@@ -50,9 +54,31 @@ namespace Banco_MVP_MySQL_.Forms
             Controls.Add(btnEditarNome);
             btnEditarNome.Click += EditarNome;
 
+            txtNovaSenha = new TextBox()
+            {
+                Location= new Point(200,0),
+                Text = "Nova senha"
+            };
+            Controls.Add(txtNovaSenha);
+
+            txtConfirmarNovaSenha = new TextBox()
+            {
+                Location = new Point(200, 50),
+                Text = "Confirmar nova senha"
+            };
+            Controls.Add(txtConfirmarNovaSenha);
+
+            btnEditarSenha = new Button()
+            {
+                Location = new Point(200, 70),
+                Text = "Mudar senha"
+            };
+            Controls.Add(btnEditarSenha);
+            btnEditarSenha.Click += EditarSenha;
+
             lblId = new Label()
             {
-                Location = new Point(150,50),
+                Location = new Point(300,50),
                 Text = "Id do usuario: " + Convert.ToString(idUsuario)
             };
             Controls.Add(lblId);
@@ -62,9 +88,20 @@ namespace Banco_MVP_MySQL_.Forms
         {
             if (presenter.editarNome())
             {
-                MessageBox.Show("Editado com sucesso!");
+                MessageBox.Show("Nome editado com sucesso!");
             }
             else
+            {
+                return;
+            }
+        }
+
+        private void EditarSenha(object sender, EventArgs e)
+        {
+            if (presenter.editarSenha())
+            {
+                MessageBox.Show("Senha editada com sucesso!");
+            }else
             {
                 return;
             }
