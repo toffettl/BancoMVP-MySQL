@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banco(MVP-MySQL)", "Banco(MVP-MySQL).csproj", "{612088D6-1B21-4C8B-B7C1-20B9865BB8BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{612088D6-1B21-4C8B-B7C1-20B9865BB8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612088D6-1B21-4C8B-B7C1-20B9865BB8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612088D6-1B21-4C8B-B7C1-20B9865BB8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612088D6-1B21-4C8B-B7C1-20B9865BB8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAD2C52F-7226-406B-8CEB-132C1DE40D92}
+	EndGlobalSection
+EndGlobal
