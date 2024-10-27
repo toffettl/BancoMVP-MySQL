@@ -32,6 +32,7 @@
             this.txtNomeLogin = new System.Windows.Forms.TextBox();
             this.txtSenhaLogin = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.btnCadastro = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label
@@ -67,11 +68,22 @@
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // btnCadastro
+            // 
+            this.btnCadastro.Location = new System.Drawing.Point(140, 363);
+            this.btnCadastro.Name = "btnCadastro";
+            this.btnCadastro.Size = new System.Drawing.Size(75, 23);
+            this.btnCadastro.TabIndex = 4;
+            this.btnCadastro.Text = "Cadastro";
+            this.btnCadastro.UseVisualStyleBackColor = true;
+            this.btnCadastro.Click += new System.EventHandler(this.btnCadastro_Click);
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 461);
+            this.Controls.Add(this.btnCadastro);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtSenhaLogin);
             this.Controls.Add(this.txtNomeLogin);
@@ -89,6 +101,7 @@
         private System.Windows.Forms.TextBox txtNomeLogin;
         private System.Windows.Forms.TextBox txtSenhaLogin;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Button btnCadastro;
     }
 }
 

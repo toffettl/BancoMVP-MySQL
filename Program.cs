@@ -17,7 +17,7 @@ namespace Banco_MVP_MySQL_
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CadastroForm());
+            Application.Run(new LoginForm());
         }
     }
 }

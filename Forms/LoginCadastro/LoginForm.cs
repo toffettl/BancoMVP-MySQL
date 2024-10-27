@@ -1,4 +1,5 @@
 ﻿using Banco_MVP_MySQL_.Forms;
+using Banco_MVP_MySQL_.Forms.LoginCadastro;
 using Banco_MVP_MySQL_.Models;
 using Banco_MVP_MySQL_.Presenters;
 using Banco_MVP_MySQL_.Views;
@@ -43,6 +44,13 @@ namespace Banco_MVP_MySQL_
         public void ExibirMensagem(string mensagem)
         {
             MessageBox.Show(mensagem);
+        }
+
+        private void btnCadastro_Click(object sender, EventArgs e)
+        {
+            CadastroForm cadastroForm = new CadastroForm();
+            cadastroForm.Show();
+            Hide();
         }
     }
 }

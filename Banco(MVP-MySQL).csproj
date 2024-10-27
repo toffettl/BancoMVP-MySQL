@@ -117,9 +117,10 @@
     <Compile Include="Forms\PrincipalForm.Designer.cs">
       <DependentUpon>PrincipalForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrincipalModel.cs" />
     <Compile Include="Views\ICadastrUsuarioV.cs" />
-    <Compile Include="Models\CadastroUsuarioM.cs" />
-    <Compile Include="Models\LoginUsuarioM.cs" />
+    <Compile Include="Models\CadastroLogin\CadastroUsuarioM.cs" />
+    <Compile Include="Models\CadastroLogin\LoginUsuarioM.cs" />
     <Compile Include="Presenters\CadastroUsuarioP.cs" />
     <Compile Include="Presenters\LoginUsuarioP.cs" />
     <Compile Include="Presenters\PrincipalP.cs" />
