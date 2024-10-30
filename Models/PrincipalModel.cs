@@ -143,7 +143,7 @@ namespace Banco_MVP_MySQL_.Models
             {
                 MysqlConexaoBanco.Open();
 
-                string select = "SELECT nome, saldo FROM usuario WHERE idUsuario = @Id;";
+                string select = "SELECT idUsuario, nome, saldo FROM usuario WHERE idUsuario = @Id;";
 
                 MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
                 comandoSql.Parameters.AddWithValue("@Id", Id);
@@ -157,7 +157,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public bool tranferir()
+        public bool atualizarSaldo()
         {
             MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
             try

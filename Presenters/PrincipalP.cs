@@ -119,17 +119,51 @@ namespace Banco_MVP_MySQL_.Presenters
         {
             model.Id = idUsuario;
             model.NovoSaldo = view.Saldo - view.ValorTranferencia;
-            if (model.tranferir())
+            if (view.Saldo >= view.ValorTranferencia)
             {
-                MessageBox.Show("Tranfêrencia feita com sucesso!");
-                return true;
+                if (model.atualizarSaldo())
+                {
+                    view.Saldo = model.NovoSaldo;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                MessageBox.Show("Erro ao tranferir!");
+                MessageBox.Show("Valo da tranferência inválido!");
                 return false;
             }
         }
+        public bool receber()
+        {
+            model.Id = view.idTranferencia;
 
+            using (MySqlDataReader reader = model.lerUsuario())
+            {
+                if (reader != null)
+                {
+                    if (reader.Read())
+                    {
+                        model.NovoSaldo = Convert.ToInt32(reader["saldo"]) + view.ValorTranferencia;
+                        if (model.atualizarSaldo())
+                        {
+                            return true;
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

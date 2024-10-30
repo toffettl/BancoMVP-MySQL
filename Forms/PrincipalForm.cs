@@ -151,9 +151,18 @@ namespace Banco_MVP_MySQL_.Forms
         {
             idTranferencia = Convert.ToInt32(nupIdTransferencia.Value);
             ValorTranferencia = Convert.ToInt32(nupValorTransferencia.Value);
-            if (presenter.tranferencia())
+            if (presenter.receber())
             {
-                MessageBox.Show("Valor transferido com sucesso!");
+                if (presenter.tranferencia())
+                {
+                    presenter.receberSaldo();
+                    lblSaldo.Text = Convert.ToString(Saldo);
+                    MessageBox.Show("Valor transferido com sucesso!");
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao receber");
+                }
             }
             else
             {
