@@ -25,12 +25,9 @@ namespace Banco_MVP_MySQL_.Forms
         public string Senha => txtSenhaEditar.Text;
         public string NovaSenha => txtNovaSenha.Text;
         public string ConfirmarNovaSenha => txtConfirmarNovaSenha.Text;
-        public int Saldo
-        {
-            get;
-            set;
-        }
+        public int Saldo { get; set; }
         public int ValorTranferencia { get; set; }
+        public int idTranferencia { get; set; }
 
         public TextBox txtEditarNome;
         public TextBox txtSenhaEditar;
@@ -40,6 +37,9 @@ namespace Banco_MVP_MySQL_.Forms
         public TextBox txtConfirmarNovaSenha;
         public Button btnEditarSenha;
         public Label lblSaldo;
+        public NumericUpDown nupIdTransferencia;
+        public NumericUpDown nupValorTransferencia;
+        public Button BtnTransferir;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
@@ -102,6 +102,25 @@ namespace Banco_MVP_MySQL_.Forms
             };
             Controls.Add(lblSaldo);
 
+            nupIdTransferencia = new NumericUpDown()
+            {
+                Location = new Point(400, 0)
+            };
+            Controls.Add(nupIdTransferencia);
+
+            nupValorTransferencia = new NumericUpDown()
+            {
+                Location = new Point(400, 20)
+            };
+            Controls.Add(nupValorTransferencia);
+
+            BtnTransferir = new Button()
+            {
+                Location = new Point(400, 40),
+                Text = "Transferir"
+            };
+            Controls.Add(BtnTransferir);
+            BtnTransferir.Click += Transferir;
         }
 
         private void EditarNome(object sender, EventArgs e)
@@ -125,6 +144,20 @@ namespace Banco_MVP_MySQL_.Forms
             else
             {
                 return;
+            }
+        }
+
+        private void Transferir(object sender, EventArgs e)
+        {
+            idTranferencia = Convert.ToInt32(nupIdTransferencia.Value);
+            ValorTranferencia = Convert.ToInt32(nupValorTransferencia.Value);
+            if (presenter.tranferencia())
+            {
+                MessageBox.Show("Valor transferido com sucesso!");
+            }
+            else
+            {
+                MessageBox.Show("Erro ao transferir!");
             }
         }
     }

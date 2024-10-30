@@ -118,7 +118,7 @@ namespace Banco_MVP_MySQL_.Presenters
         public bool tranferencia()
         {
             model.Id = idUsuario;
-            model.NovoSaldo = model.Saldo - view.ValorTranferencia;
+            model.NovoSaldo = view.Saldo - view.ValorTranferencia;
             if (model.tranferir())
             {
                 MessageBox.Show("Tranfêrencia feita com sucesso!");

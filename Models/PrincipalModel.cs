@@ -168,6 +168,8 @@ namespace Banco_MVP_MySQL_.Models
 
                 MySqlCommand comandoSql = new MySqlCommand(update, MysqlConexaoBanco);
                 comandoSql.Parameters.AddWithValue("@NovoSaldo", NovoSaldo);
+                comandoSql.Parameters.AddWithValue("@Id", Id);
+
 
                 comandoSql.ExecuteNonQuery();
 

@@ -13,6 +13,7 @@ namespace Banco_MVP_MySQL_.Views
         string NovaSenha { get; }
         string ConfirmarNovaSenha { get; }
         int Saldo { get; set; }
-        int ValorTranferencia { get; set; } 
+        int ValorTranferencia { get; set; }
+        int idTranferencia { get; set; }
     }
 }
