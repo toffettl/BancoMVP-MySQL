@@ -15,14 +15,14 @@ namespace Banco_MVP_MySQL_.Presenters
     {
         private readonly IPrincipalV view;
         private readonly PrincipalModel model;
-        private readonly PrincipalForm form;
         public int idUsuario;
 
-        public PrincipalP(PrincipalForm form, PrincipalModel model)
+        public PrincipalP(IPrincipalV view, PrincipalModel model)
         {
-            this.form = form;
+            this.view = view;
             this.model = model;
         }
+
 
         #region Editar senha e nome, apagar user
         public bool editarNome()
@@ -105,13 +105,29 @@ namespace Banco_MVP_MySQL_.Presenters
                 {
                     if (reader.Read())
                     {
-                        form.saldo = Convert.ToInt32(reader["saldo"]);
+                        view.Saldo = Convert.ToInt32(reader["saldo"]);
                     }
                 }
                 else
                 {
                     MessageBox.Show("Não foi possível ler os dados do usuário.");
                 }
+            }
+        }
+
+        public bool tranferencia()
+        {
+            model.Id = idUsuario;
+            model.NovoSaldo = model.Saldo - view.ValorTranferencia;
+            if (model.tranferir())
+            {
+                MessageBox.Show("Tranfêrencia feita com sucesso!");
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Erro ao tranferir!");
+                return false;
             }
         }
 

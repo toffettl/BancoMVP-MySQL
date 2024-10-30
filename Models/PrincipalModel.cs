@@ -15,7 +15,7 @@ namespace Banco_MVP_MySQL_.Models
         private string nome;
         private string senha;
         private int saldo;
-        private int valorTranferencia;
+        private int novoSaldo;
 
         public int Id
         {
@@ -37,10 +37,10 @@ namespace Banco_MVP_MySQL_.Models
             get { return saldo; }
             set { saldo = value; }
         }
-        public int ValorTranferencia
+        public int NovoSaldo
         {
-            get { return valorTranferencia; }
-            set { valorTranferencia = value; }
+            get { return novoSaldo; }
+            set { novoSaldo = value; }
         }
 
         #region Alteração de nome e senha e apagar user
@@ -156,6 +156,29 @@ namespace Banco_MVP_MySQL_.Models
                 return null;
             }
         }
+
+        public bool tranferir()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string update = "update usuario set saldo = @NovoSaldo where idUsuario = @Id;";
+
+                MySqlCommand comandoSql = new MySqlCommand(update, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@NovoSaldo", NovoSaldo);
+
+                comandoSql.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - Método transferirValor: " + ex);
+                return false;
+            }
+        }
     }
         #endregion
-    }
+}

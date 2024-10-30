@@ -25,7 +25,12 @@ namespace Banco_MVP_MySQL_.Forms
         public string Senha => txtSenhaEditar.Text;
         public string NovaSenha => txtNovaSenha.Text;
         public string ConfirmarNovaSenha => txtConfirmarNovaSenha.Text;
-        public int saldo;
+        public int Saldo
+        {
+            get;
+            set;
+        }
+        public int ValorTranferencia { get; set; }
 
         public TextBox txtEditarNome;
         public TextBox txtSenhaEditar;
@@ -48,14 +53,14 @@ namespace Banco_MVP_MySQL_.Forms
 
             txtSenhaEditar = new TextBox()
             {
-                Location = new Point(300,300),
+                Location = new Point(300, 300),
                 Text = "Senha"
             };
             Controls.Add(txtSenhaEditar);
 
             btnEditarNome = new Button()
             {
-                Location = new Point(30,60),
+                Location = new Point(30, 60),
                 Text = "Editar nome"
             };
             Controls.Add(btnEditarNome);
@@ -63,7 +68,7 @@ namespace Banco_MVP_MySQL_.Forms
 
             txtNovaSenha = new TextBox()
             {
-                Location= new Point(200,0),
+                Location = new Point(200, 0),
                 Text = "Nova senha"
             };
             Controls.Add(txtNovaSenha);
@@ -85,7 +90,7 @@ namespace Banco_MVP_MySQL_.Forms
 
             lblId = new Label()
             {
-                Location = new Point(300,50),
+                Location = new Point(300, 50),
                 Text = "Id do usuario: " + Convert.ToString(idUsuario)
             };
             Controls.Add(lblId);
@@ -93,7 +98,7 @@ namespace Banco_MVP_MySQL_.Forms
             lblSaldo = new Label()
             {
                 Location = new Point(200, 100),
-                Text = Convert.ToString(saldo) // Inicializando com um valor padrão
+                Text = Convert.ToString(Saldo) 
             };
             Controls.Add(lblSaldo);
 
@@ -116,7 +121,8 @@ namespace Banco_MVP_MySQL_.Forms
             if (presenter.editarSenha())
             {
                 MessageBox.Show("Senha editada com sucesso!");
-            }else
+            }
+            else
             {
                 return;
             }
