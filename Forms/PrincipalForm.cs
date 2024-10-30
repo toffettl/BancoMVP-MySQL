@@ -10,16 +10,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Banco_MVP_MySQL_.Presenters;
+using Banco_MVP_MySQL_.Views;
 
 namespace Banco_MVP_MySQL_.Forms
 {
-    public partial class PrincipalForm : Form
+    public partial class PrincipalForm : Form, IPrincipalV
     {
         private readonly LoginUsuarioM modelLogin;
         private readonly PrincipalP presenter;
         private readonly PrincipalModel model;
         public int idUsuario;
-        public string nomeUsuario;
+
+        public string Nome => txtEditarNome.Text;
+        public string Senha => txtSenhaEditar.Text;
+        public string NovaSenha => txtNovaSenha.Text;
+        public string ConfirmarNovaSenha => txtConfirmarNovaSenha.Text;
+        public int saldo;
 
         public TextBox txtEditarNome;
         public TextBox txtSenhaEditar;
@@ -28,15 +34,16 @@ namespace Banco_MVP_MySQL_.Forms
         public TextBox txtNovaSenha;
         public TextBox txtConfirmarNovaSenha;
         public Button btnEditarSenha;
+        public Label lblSaldo;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
             modelLogin = new LoginUsuarioM();
             model = new PrincipalModel();
             presenter = new PrincipalP(this, model);
-            this.idUsuario = idUsuario;
-
+            presenter.idUsuario = idUsuario;
             txtEditarNome = new TextBox();
+            presenter.receberSaldo();
             Controls.Add(txtEditarNome);
 
             txtSenhaEditar = new TextBox()
@@ -82,6 +89,14 @@ namespace Banco_MVP_MySQL_.Forms
                 Text = "Id do usuario: " + Convert.ToString(idUsuario)
             };
             Controls.Add(lblId);
+
+            lblSaldo = new Label()
+            {
+                Location = new Point(200, 100),
+                Text = Convert.ToString(saldo) // Inicializando com um valor padrão
+            };
+            Controls.Add(lblSaldo);
+
         }
 
         private void EditarNome(object sender, EventArgs e)

@@ -16,13 +16,14 @@ using System.Windows.Forms;
 
 namespace Banco_MVP_MySQL_
 {
-    public partial class LoginForm : Form
+    public partial class LoginForm : Form, ILoginUsuarioV
     {
         private readonly LoginUsuarioP presenter;
         private readonly LoginUsuarioM model;
         public int idUsuario;
-        public string Nome;
-        public string Senha;
+        public string Nome => txtNomeLogin.Text;
+        public string Senha => txtSenhaLogin.Text;
+
         public LoginForm()
         {
             InitializeComponent();
@@ -31,8 +32,6 @@ namespace Banco_MVP_MySQL_
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Nome = txtNomeLogin.Text;
-            Senha = txtSenhaLogin.Text;
             if (presenter.loginUsuario())
             {
                 label.Text = Convert.ToString(idUsuario);

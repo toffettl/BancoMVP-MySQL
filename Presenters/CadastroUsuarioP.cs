@@ -10,10 +10,10 @@ namespace Banco_MVP_MySQL_.Presenters
 {
     internal class CadastroUsuarioP
     {
-        private readonly CadastroForm view;
+        private readonly ICadastroUsuarioV view;
         private readonly CadastroUsuarioM model;
 
-        public CadastroUsuarioP(CadastroForm view, CadastroUsuarioM model)
+        public CadastroUsuarioP(ICadastroUsuarioV view, CadastroUsuarioM model)
         {
             this.view = view;
             this.model = model;

@@ -1,5 +1,6 @@
 ﻿using Banco_MVP_MySQL_.Forms;
 using Banco_MVP_MySQL_.Models;
+using Banco_MVP_MySQL_.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,14 @@ namespace Banco_MVP_MySQL_.Presenters
 {
     internal class LoginUsuarioP
     {
-        private readonly LoginForm view;
+        private readonly ILoginUsuarioV view;
+        private readonly LoginForm form;
         private readonly PrincipalForm viewP;
+        private readonly PrincipalP principalP;
         private readonly LoginUsuarioM model;
         public int idUsuario;
 
-        public LoginUsuarioP(LoginForm view, LoginUsuarioM model)
+        public LoginUsuarioP(ILoginUsuarioV view, LoginUsuarioM model)
         {
             this.view = view;
             this.model = model;

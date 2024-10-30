@@ -127,6 +127,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ILoginUsuarioV.cs" />
+    <Compile Include="Views\IPrincipalV.cs" />
     <EmbeddedResource Include="Forms\LoginCadastro\CadastroForm.resx">
       <DependentUpon>CadastroForm.cs</DependentUpon>
     </EmbeddedResource>

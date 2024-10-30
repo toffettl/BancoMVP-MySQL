@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Banco_MVP_MySQL_.Models
         private string nome;
         private string senha;
         private int saldo;
+        private int valorTranferencia;
 
         public int Id
         {
@@ -35,7 +37,13 @@ namespace Banco_MVP_MySQL_.Models
             get { return saldo; }
             set { saldo = value; }
         }
+        public int ValorTranferencia
+        {
+            get { return valorTranferencia; }
+            set { valorTranferencia = value; }
+        }
 
+        #region Alteração de nome e senha e apagar user
         public bool mudarNome()
         {
             try
@@ -125,5 +133,29 @@ namespace Banco_MVP_MySQL_.Models
                 return false;
             }
         }
+        #endregion
+
+        #region Metodos de tranferencia e recebimento
+        public MySqlDataReader lerUsuario()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string select = "SELECT nome, saldo FROM usuario WHERE idUsuario = @Id;";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@Id", Id);
+
+                return comandoSql.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - método lerUsuario: " + ex.Message);
+                return null;
+            }
+        }
     }
-}
+        #endregion
+    }

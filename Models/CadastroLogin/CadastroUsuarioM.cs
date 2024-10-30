@@ -57,7 +57,7 @@ namespace Banco_MVP_MySQL_.Models
                     {
                         comandoSql.Parameters.AddWithValue("@Nome", Nome);
                         comandoSql.Parameters.AddWithValue("@Senha", Senha);
-                        comandoSql.Parameters.AddWithValue("@Saldo", Saldo = 0);
+                        comandoSql.Parameters.AddWithValue("@Saldo", Saldo = 50);
 
                         comandoSql.ExecuteNonQuery();
 
