@@ -27,6 +27,7 @@ namespace Banco_MVP_MySQL_
         public LoginForm()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             model = new LoginUsuarioM();
             presenter = new LoginUsuarioP(this, model);
         }

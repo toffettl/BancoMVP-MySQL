@@ -51,10 +51,11 @@ namespace Banco_MVP_MySQL_.Models
                 {
                     MysqlConexaoBanco.Open();
 
-                    string insert = "INSERT INTO usuario (nome, senha, saldo) VALUES (@Nome, @Senha, @Saldo);";
+                    string insert = "INSERT INTO usuario (idUsuario, nome, senha, saldo) VALUES (@idUsuario, @Nome, @Senha, @Saldo);";
 
                     using (MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
                     {
+                        comandoSql.Parameters.AddWithValue("@idUsuario", Id);
                         comandoSql.Parameters.AddWithValue("@Nome", Nome);
                         comandoSql.Parameters.AddWithValue("@Senha", Senha);
                         comandoSql.Parameters.AddWithValue("@Saldo", Saldo = 50);

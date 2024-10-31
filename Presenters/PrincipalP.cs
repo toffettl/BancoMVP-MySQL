@@ -95,7 +95,7 @@ namespace Banco_MVP_MySQL_.Presenters
         }
         #endregion
 
-        public void receberSaldo()
+        public void lerUsuario()
         {
             model.Id = idUsuario;
 
@@ -106,6 +106,7 @@ namespace Banco_MVP_MySQL_.Presenters
                     if (reader.Read())
                     {
                         view.Saldo = Convert.ToInt32(reader["saldo"]);
+                        view.Nome = Convert.ToString(reader["nome"]);
                     }
                 }
                 else

@@ -19,10 +19,17 @@ namespace Banco_MVP_MySQL_.Presenters
             this.model = model;
         }
 
+        public int GerarId()
+        {
+            Random random = new Random();
+            int numeroAleatorio = random.Next(10000000, 100000000);
+            return numeroAleatorio;
+        }
         public void CadastrarUsuario()
         {
             model.Nome = view.Nome;
             model.Senha = view.Senha;
+            model.Id = GerarId();
 
             if (!string.IsNullOrWhiteSpace(model.Nome) && !string.IsNullOrWhiteSpace(model.Senha))
             {

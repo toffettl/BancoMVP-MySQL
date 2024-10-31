@@ -20,6 +20,7 @@ namespace Banco_MVP_MySQL_.Forms.LoginCadastro
         public CadastroForm()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             model = new CadastroUsuarioM();
             presenter = new CadastroUsuarioP(this, model);
         }

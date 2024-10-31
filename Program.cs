@@ -1,4 +1,5 @@
-﻿using Banco_MVP_MySQL_.Forms.LoginCadastro;
+﻿using Banco_MVP_MySQL_.Forms;
+using Banco_MVP_MySQL_.Forms.LoginCadastro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Banco_MVP_MySQL_
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new PrincipalForm(27497199));
         }
     }
 }
