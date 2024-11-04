@@ -25,16 +25,16 @@ namespace Banco_MVP_MySQL_.Presenters
 
 
         #region Editar senha e nome, apagar user
-        public bool editarNome()
+        public bool EditarNome()
         {
             model.Id = idUsuario;
             model.Nome = view.Nome;
             model.Senha = view.Senha;
             if (!string.IsNullOrEmpty(model.Nome) && !string.IsNullOrEmpty(model.Senha))
             {
-                if (model.confirmarSenha())
+                if (model.ConfirmarSenha())
                 {
-                    if (model.mudarNome())
+                    if (model.MudarNome())
                     {
                        return true;
                     }
@@ -56,7 +56,7 @@ namespace Banco_MVP_MySQL_.Presenters
             }
         }
 
-        public bool editarSenha()
+        public bool EditarSenha()
         {
             model.Id = idUsuario;
             model.Senha = view.Senha;
@@ -64,9 +64,9 @@ namespace Banco_MVP_MySQL_.Presenters
             {
                 if(view.NovaSenha == view.ConfirmarNovaSenha)
                 {
-                    if (model.confirmarSenha())
+                    if (model.ConfirmarSenha())
                     {
-                        if (model.mudarSenha(view.NovaSenha))
+                        if (model.MudarSenha(view.NovaSenha))
                         {
                             return true;
                         }
@@ -95,11 +95,11 @@ namespace Banco_MVP_MySQL_.Presenters
         }
         #endregion
 
-        public void lerUsuario()
+        public void LerUsuario()
         {
             model.Id = idUsuario;
 
-            using (MySqlDataReader reader = model.lerUsuario())
+            using (MySqlDataReader reader = model.LerUsuario())
             {
                 if (reader != null)
                 {
@@ -119,10 +119,10 @@ namespace Banco_MVP_MySQL_.Presenters
         public bool tranferencia()
         {
             model.Id = idUsuario;
-            model.NovoSaldo = view.Saldo - view.ValorTranferencia;
+            model.NovoSaldo = 10;
             if (view.Saldo >= view.ValorTranferencia)
             {
-                if (model.atualizarSaldo())
+                if (model.AtualizarSaldo())
                 {
                     view.Saldo = model.NovoSaldo;
                     return true;
@@ -142,26 +142,32 @@ namespace Banco_MVP_MySQL_.Presenters
         {
             model.Id = view.idTranferencia;
 
-            using (MySqlDataReader reader = model.lerUsuario())
+            using (MySqlDataReader reader = model.LerUsuario())
             {
                 if (reader != null)
                 {
                     if (reader.Read())
                     {
                         model.NovoSaldo = Convert.ToInt32(reader["saldo"]) + view.ValorTranferencia;
-                        if (model.atualizarSaldo())
+                        if (model.AtualizarSaldo())
                         {
                             return true;
                         }
-                        return true;
+                        else
+                        {
+                            MessageBox.Show("Erro ao atualizar saldo!");
+                            return false;
+                        }
                     }
                     else
                     {
+                        MessageBox.Show("Erro");
                         return false;
                     }
                 }
                 else
                 {
+                    MessageBox.Show("Erro ao ler saldo!");
                     return false;
                 }
             }

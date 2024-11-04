@@ -33,11 +33,11 @@ namespace Banco_MVP_MySQL_.Presenters
 
             if (!string.IsNullOrWhiteSpace(model.Nome) && !string.IsNullOrWhiteSpace(model.Senha))
             {
-                if (!model.nomeUsuarioExiste())
+                if (!model.NomeUsuarioExiste())
                 {
                     if (view.Senha == view.SenhaConfirmada)
                     {
-                        model.cadastrarUsuario();
+                        model.CadastrarUsuario();
                         view.ExibirMensagem("Usuário cadastrado com sucesso!" + model.Nome);
                     }
                     else

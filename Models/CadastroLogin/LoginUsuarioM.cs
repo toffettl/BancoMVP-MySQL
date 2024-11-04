@@ -31,7 +31,7 @@ namespace Banco_MVP_MySQL_.Models
             set { id = value; }
         }
 
-        public bool confirmarLogin()
+        public bool ConfirmarLogin()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public int receberId()
+        public int ReceberId()
         {
             int idUsuario = 0;
             using (MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor))

@@ -14,8 +14,8 @@ namespace Banco_MVP_MySQL_.Models
         private int id;
         private string nome;
         private string senha;
-        private int saldo;
-        private int novoSaldo;
+        private decimal saldo;
+        private decimal novoSaldo;
 
         public int Id
         {
@@ -32,19 +32,19 @@ namespace Banco_MVP_MySQL_.Models
             get { return senha; }
             set { senha = value; }
         }
-        public int Saldo
+        public decimal Saldo
         {
             get { return saldo; }
             set { saldo = value; }
         }
-        public int NovoSaldo
+        public decimal NovoSaldo
         {
             get { return novoSaldo; }
             set { novoSaldo = value; }
         }
 
         #region Alteração de nome e senha e apagar user
-        public bool mudarNome()
+        public bool MudarNome()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public bool mudarSenha(string novaSenha)
+        public bool MudarSenha(string novaSenha)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public bool confirmarSenha()
+        public bool ConfirmarSenha()
         {
             try
             {
@@ -112,7 +112,7 @@ namespace Banco_MVP_MySQL_.Models
                 return false;
             }
         }
-        public bool excluirUsuario()
+        public bool ExcluirUsuario()
         {
             try
             {
@@ -136,7 +136,7 @@ namespace Banco_MVP_MySQL_.Models
         #endregion
 
         #region Metodos de tranferencia e recebimento
-        public MySqlDataReader lerUsuario()
+        public MySqlDataReader LerUsuario()
         {
             MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
             try
@@ -157,7 +157,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public bool atualizarSaldo()
+        public bool AtualizarSaldo()
         {
             MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
             try

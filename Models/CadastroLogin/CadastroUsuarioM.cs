@@ -19,7 +19,7 @@ namespace Banco_MVP_MySQL_.Models
         private int id;
         private string nome;
         private string senha;
-        private int saldo;
+        private decimal saldo;
 
         public int Id
         {
@@ -37,13 +37,13 @@ namespace Banco_MVP_MySQL_.Models
             get { return senha; }
             set { senha = value; }
         }
-        public int Saldo
+        public decimal Saldo
         {
             get { return saldo; }
             set { saldo = value; }
         }
 
-        public bool cadastrarUsuario()
+        public bool CadastrarUsuario()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Banco_MVP_MySQL_.Models
                         comandoSql.Parameters.AddWithValue("@idUsuario", Id);
                         comandoSql.Parameters.AddWithValue("@Nome", Nome);
                         comandoSql.Parameters.AddWithValue("@Senha", Senha);
-                        comandoSql.Parameters.AddWithValue("@Saldo", Saldo = 50);
+                        comandoSql.Parameters.AddWithValue("@Saldo", Saldo = 50.50M);
 
                         comandoSql.ExecuteNonQuery();
 
@@ -73,7 +73,7 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public bool nomeUsuarioExiste()
+        public bool NomeUsuarioExiste()
         {
             using (MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor))
             {
@@ -96,7 +96,7 @@ namespace Banco_MVP_MySQL_.Models
                 }
             }
         }
-        public bool adicionarSaldo()
+        public bool AdicionarSaldo()
         {
             try
             {

@@ -24,16 +24,23 @@ namespace Banco_MVP_MySQL_
         public string Nome => txtNomeLogin.Text;
         public string Senha => txtSenhaLogin.Text;
 
+        private LoginComponents loginComponentes;
+
         public LoginForm()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             model = new LoginUsuarioM();
             presenter = new LoginUsuarioP(this, model);
+
+            loginComponentes = new LoginComponents();
+            loginComponentes.AddControles(this);
+            this.Text = "Exemplo de Formulário";
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (presenter.loginUsuario())
+            if (presenter.LoginUsuario())
             {
                 label.Text = Convert.ToString(idUsuario);
                 PrincipalForm principalForm = new PrincipalForm(presenter.idUsuario);

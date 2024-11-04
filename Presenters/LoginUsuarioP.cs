@@ -24,16 +24,16 @@ namespace Banco_MVP_MySQL_.Presenters
             this.model = model;
         }
 
-        public bool loginUsuario()
+        public bool LoginUsuario()
         {
             model.Nome = view.Nome;
             model.Senha = view.Senha;
             if (!string.IsNullOrWhiteSpace(model.Nome) && !string.IsNullOrWhiteSpace(model.Senha))
             {
-                if (model.confirmarLogin())
+                if (model.ConfirmarLogin())
                 {
                     view.ExibirMensagem("Entrou");
-                    idUsuario = model.receberId();
+                    idUsuario = model.ReceberId();
                     return true;
                 }
                 else
