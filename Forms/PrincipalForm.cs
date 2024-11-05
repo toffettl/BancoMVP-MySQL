@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 
 namespace Banco_MVP_MySQL_.Forms
@@ -104,7 +105,7 @@ namespace Banco_MVP_MySQL_.Forms
 
         private void Transferir(object sender, EventArgs e)
         {
-            idTranferencia = 15143471;
+            idTranferencia = Convert.ToInt32(transferenciaComponents.txtId.Text);
             ValorTranferencia = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
             if (presenter.tranferencia())
             {

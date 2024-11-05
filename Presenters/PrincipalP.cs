@@ -119,7 +119,7 @@ namespace Banco_MVP_MySQL_.Presenters
         public bool tranferencia()
         {
             model.Id = idUsuario;
-            model.NovoSaldo = 10;
+            model.NovoSaldo = view.Saldo - view.ValorTranferencia;
             if (view.Saldo >= view.ValorTranferencia)
             {
                 if (model.AtualizarSaldo())
@@ -148,7 +148,7 @@ namespace Banco_MVP_MySQL_.Presenters
                 {
                     if (reader.Read())
                     {
-                        model.NovoSaldo = Convert.ToInt32(reader["saldo"]) + view.ValorTranferencia;
+                        model.NovoSaldo = Convert.ToDecimal(reader["saldo"]) + view.ValorTranferencia;
                         if (model.AtualizarSaldo())
                         {
                             return true;
