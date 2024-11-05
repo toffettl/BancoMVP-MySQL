@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexaoBanco.cs" />
+    <Compile Include="Forms\AlterarComponents.cs" />
     <Compile Include="Forms\LoginCadastro\CadastroForm.cs">
       <SubType>Form</SubType>
     </Compile>

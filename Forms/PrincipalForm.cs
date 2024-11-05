@@ -28,21 +28,14 @@ namespace Banco_MVP_MySQL_.Forms
             get;
             set;
         }
-        public string Senha => txtSenhaEditar.Text;
-        public string NovaSenha => txtNovaSenha.Text;
-        public string ConfirmarNovaSenha => txtConfirmarNovaSenha.Text;
+        public string Senha => alterarComponents.txtSenhaSenha.Text;
+        public string NovaSenha => alterarComponents.txtNovaSenha.Text;
+        public string ConfirmarNovaSenha => alterarComponents.txtConfirmarSenha.Text;
         public decimal Saldo { get; set; }
         public decimal ValorTranferencia { get; set; }
         public int idTranferencia { get; set; }
 
-        public TextBox txtEditarNome;
-        public TextBox txtSenhaEditar;
-        public TextBox txtSenhaEditarNome;
-        public Button btnEditarNome;
         public Label lblId;
-        public TextBox txtNovaSenha;
-        public TextBox txtConfirmarNovaSenha;
-        public Button btnEditarSenha;
         public Label lblSaldo;
         public Panel pnlMenu;
         public Panel pnlInicio;
@@ -57,6 +50,7 @@ namespace Banco_MVP_MySQL_.Forms
         public Panel pnlEditarUsuario;
 
         private TransferenciaComponents transferenciaComponents;
+        private AlterarComponents alterarComponents;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
@@ -72,6 +66,11 @@ namespace Banco_MVP_MySQL_.Forms
             transferenciaComponents.AddControles(this);
             transferenciaComponents.btnTransferir.Click += Transferir;
             transferenciaComponents.lblSaldo.Text = Convert.ToString(Saldo);
+
+            alterarComponents = new AlterarComponents();
+            alterarComponents.AddControles(this);
+            alterarComponents.btnAlterarNome.Click += EditarNome;
+            alterarComponents.btnAlterarSenha.Click += EditarSenha;
         }
 
         private void RemoverSetas(NumericUpDown numericUpDown) //remove os controles do numericDropDown
@@ -83,7 +82,7 @@ namespace Banco_MVP_MySQL_.Forms
             if (presenter.EditarNome())
             {
                 MessageBox.Show("Nome editado com sucesso!");
-                Nome = txtEditarNome.Text;
+                Nome = alterarComponents.txtNovoNome.Text;
             }
             else
             {
@@ -102,7 +101,7 @@ namespace Banco_MVP_MySQL_.Forms
                 return;
             }
         }
-
+            
         private void Transferir(object sender, EventArgs e)
         {
             idTranferencia = Convert.ToInt32(transferenciaComponents.txtId.Text);

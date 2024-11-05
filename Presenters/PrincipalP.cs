@@ -105,7 +105,7 @@ namespace Banco_MVP_MySQL_.Presenters
                 {
                     if (reader.Read())
                     {
-                        view.Saldo = Convert.ToInt32(reader["saldo"]);
+                        view.Saldo = Convert.ToDecimal(reader["saldo"]);
                         view.Nome = Convert.ToString(reader["nome"]);
                     }
                 }
