@@ -120,6 +120,7 @@
     <Compile Include="Forms\PrincipalForm.Designer.cs">
       <DependentUpon>PrincipalForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExtratoModel.cs" />
     <Compile Include="Models\PrincipalModel.cs" />
     <Compile Include="Views\ICadastrUsuarioV.cs" />
     <Compile Include="Models\CadastroLogin\CadastroUsuarioM.cs" />

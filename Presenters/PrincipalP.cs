@@ -15,12 +15,14 @@ namespace Banco_MVP_MySQL_.Presenters
     {
         private readonly IPrincipalV view;
         private readonly PrincipalModel model;
+        private readonly ExtratoModel modelExtrato;
         public int idUsuario;
 
-        public PrincipalP(IPrincipalV view, PrincipalModel model)
+        public PrincipalP(IPrincipalV view, PrincipalModel model, ExtratoModel modelextrato)
         {
             this.view = view;
             this.model = model;
+            this.modelExtrato = modelextrato;
         }
 
 
@@ -120,12 +122,23 @@ namespace Banco_MVP_MySQL_.Presenters
         {
             model.Id = idUsuario;
             model.NovoSaldo = view.Saldo - view.ValorTranferencia;
+            modelExtrato.SaldoExtrato = view.ValorTranferencia;
+            modelExtrato.NomePagante = view.Nome;
+            modelExtrato.FkIdUsuario = idUsuario;
             if (view.Saldo >= view.ValorTranferencia)
             {
                 if (model.AtualizarSaldo())
                 {
                     view.Saldo = model.NovoSaldo;
-                    return true;
+                    if (modelExtrato.CadastrarExtrato())
+                    {
+                        MessageBox.Show("Pagamento feito com sucesso!");
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {

@@ -21,6 +21,7 @@ namespace Banco_MVP_MySQL_.Forms
         private readonly LoginUsuarioM modelLogin;
         private readonly PrincipalP presenter;
         private readonly PrincipalModel model;
+        private readonly ExtratoModel extratoModel;
         public int idUsuario;
 
         public string Nome
@@ -58,7 +59,8 @@ namespace Banco_MVP_MySQL_.Forms
             this.Size = new Size(1280, 720);
             modelLogin = new LoginUsuarioM();
             model = new PrincipalModel();
-            presenter = new PrincipalP(this, model);
+            extratoModel = new ExtratoModel();
+            presenter = new PrincipalP(this, model, extratoModel);
             presenter.idUsuario = idUsuario;
             presenter.LerUsuario();
 
