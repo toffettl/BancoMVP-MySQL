@@ -102,10 +102,10 @@ namespace Banco_MVP_MySQL_.Models
             {
                 MysqlConexaoBanco.Open();
 
-                string select = "SELECT idUsuario, nome, saldo FROM usuario WHERE idUsuario = @Id;";
+                string select = "SELECT idUsuario, nome, saldo FROM usuario WHERE idUsuario = @FkIdReceber;";
 
                 MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
-                comandoSql.Parameters.AddWithValue("@Id", FkIdPagante);
+                comandoSql.Parameters.AddWithValue("@FkIdReceber", FkIdReceber);
 
                 return comandoSql.ExecuteReader(CommandBehavior.CloseConnection);
             }

@@ -37,10 +37,11 @@ namespace Banco_MVP_MySQL_.Forms
 
         public int idExtrato { get; set; }
         public decimal valorExtrato { get; set; }
-        public string nomePagante { get; set; }
+        public string nomePagante => Nome;
         public string nomeReceber { get; set; }
         public DateTime dataPagamento { get; set; }
-        public int idPagante { get; set; }
+        public int fkIdPagante { get; set; }
+        public int fkIdReceber { get; set; }
 
 
         public Label lblId;
@@ -120,6 +121,7 @@ namespace Banco_MVP_MySQL_.Forms
         private void Transferir(object sender, EventArgs e)
         {
             idReceber = Convert.ToInt32(transferenciaComponents.txtId.Text);
+            fkIdReceber = Convert.ToInt32(transferenciaComponents.txtId.Text);
             ValorTranferencia = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
             valorExtrato = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
             presenter.tranferencia();       

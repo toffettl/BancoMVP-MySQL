@@ -24,7 +24,7 @@ namespace Banco_MVP_MySQL_.Presenters
 
         public void CadastrarExtrato()
         {
-            model.FkIdPagante = idUsuario;
+            model.FkIdReceber = view.fkIdReceber;
             using (MySqlDataReader reader = model.LerUsuario())
             {
                 if (reader != null)
@@ -36,7 +36,7 @@ namespace Banco_MVP_MySQL_.Presenters
                         model.NomePagante = view.nomePagante;
                         model.FkIdPagante = idUsuario;
                         model.DataPagamento = DateTime.Now;
-                        model.FkIdReceber = view.idReceber;
+                        model.FkIdReceber = view.fkIdReceber;
                         if (!model.CadastrarExtrato())
                         {
                             MessageBox.Show("Erro ao cadastrar extrato!");
@@ -45,6 +45,7 @@ namespace Banco_MVP_MySQL_.Presenters
                     else
                     {
                         MessageBox.Show("Não foi possível ler os dados do usuário.");
+                        Console.Write(view.fkIdReceber);
                     }
                 }
                 else
