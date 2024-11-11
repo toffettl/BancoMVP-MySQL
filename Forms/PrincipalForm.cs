@@ -16,25 +16,32 @@ using System.Windows.Forms;
 
 namespace Banco_MVP_MySQL_.Forms
 {
-    public partial class PrincipalForm : Form, IPrincipalV
+    public partial class PrincipalForm : Form, IPrincipalV, IExtratoV
     {
         private readonly LoginUsuarioM modelLogin;
         private readonly PrincipalP presenter;
         private readonly PrincipalModel model;
         private readonly ExtratoModel extratoModel;
+        private readonly ExtratoP presenterExtrato;
+
         public int idUsuario;
 
-        public string Nome
-        {
-            get;
-            set;
-        }
+        public string Nome{get;  set;}
         public string Senha => alterarComponents.txtSenhaSenha.Text;
         public string NovaSenha => alterarComponents.txtNovaSenha.Text;
         public string ConfirmarNovaSenha => alterarComponents.txtConfirmarSenha.Text;
         public decimal Saldo { get; set; }
         public decimal ValorTranferencia { get; set; }
-        public int idTranferencia { get; set; }
+        public int idReceber { get; set; }
+
+
+        public int idExtrato { get; set; }
+        public decimal valorExtrato { get; set; }
+        public string nomePagante { get; set; }
+        public string nomeReceber { get; set; }
+        public DateTime dataPagamento { get; set; }
+        public int idPagante { get; set; }
+
 
         public Label lblId;
         public Label lblSaldo;
@@ -52,6 +59,7 @@ namespace Banco_MVP_MySQL_.Forms
 
         private TransferenciaComponents transferenciaComponents;
         private AlterarComponents alterarComponents;
+        private ExtratoComponents extratoComponents;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
@@ -60,8 +68,10 @@ namespace Banco_MVP_MySQL_.Forms
             modelLogin = new LoginUsuarioM();
             model = new PrincipalModel();
             extratoModel = new ExtratoModel();
-            presenter = new PrincipalP(this, model, extratoModel);
+            presenter = new PrincipalP(this, model);
+            presenterExtrato = new ExtratoP(this, extratoModel);
             presenter.idUsuario = idUsuario;
+            presenterExtrato.idUsuario = idUsuario;
             presenter.LerUsuario();
 
             transferenciaComponents = new TransferenciaComponents();
@@ -73,6 +83,9 @@ namespace Banco_MVP_MySQL_.Forms
             alterarComponents.AddControles(this);
             alterarComponents.btnAlterarNome.Click += EditarNome;
             alterarComponents.btnAlterarSenha.Click += EditarSenha;
+
+            extratoComponents = new ExtratoComponents();
+            extratoComponents.AddControles(this);
         }
 
         private void RemoverSetas(NumericUpDown numericUpDown) //remove os controles do numericDropDown
@@ -106,25 +119,13 @@ namespace Banco_MVP_MySQL_.Forms
             
         private void Transferir(object sender, EventArgs e)
         {
-            idTranferencia = Convert.ToInt32(transferenciaComponents.txtId.Text);
+            idReceber = Convert.ToInt32(transferenciaComponents.txtId.Text);
             ValorTranferencia = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
-            if (presenter.tranferencia())
-            {
-                if (presenter.receber())
-                {
-                    presenter.LerUsuario();
-                    //lblSaldo.Text = "R$: " + Convert.ToString(Saldo);
-                    MessageBox.Show("Valor transferido com sucesso!");
-                }
-                else
-                {
-                    MessageBox.Show("Erro ao receberdas");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Erro ao transferir!");
-            }
+            valorExtrato = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
+            presenter.tranferencia();       
+            presenter.receber();           
+            presenter.LerUsuario();
+            presenterExtrato.CadastrarExtrato();
         }
 
         private void CopiarId(object sender, EventArgs e)

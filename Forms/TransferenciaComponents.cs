@@ -23,6 +23,7 @@ namespace Banco_MVP_MySQL_.Forms
                 Location = new Point(0, 0),
                 Width = 100,
                 Text = "00,00",
+                Size = new Size(50,10)
             };
             txtId = new TextBox()
             {

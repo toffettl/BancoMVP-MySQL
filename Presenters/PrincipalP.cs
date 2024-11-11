@@ -4,6 +4,7 @@ using Banco_MVP_MySQL_.Views;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,14 +16,12 @@ namespace Banco_MVP_MySQL_.Presenters
     {
         private readonly IPrincipalV view;
         private readonly PrincipalModel model;
-        private readonly ExtratoModel modelExtrato;
         public int idUsuario;
 
-        public PrincipalP(IPrincipalV view, PrincipalModel model, ExtratoModel modelextrato)
+        public PrincipalP(IPrincipalV view, PrincipalModel model)
         {
             this.view = view;
             this.model = model;
-            this.modelExtrato = modelextrato;
         }
 
 
@@ -118,42 +117,48 @@ namespace Banco_MVP_MySQL_.Presenters
             }
         }
 
-        public bool tranferencia()
+        public void tranferencia()
         {
-            model.Id = idUsuario;
-            model.NovoSaldo = view.Saldo - view.ValorTranferencia;
-            modelExtrato.SaldoExtrato = view.ValorTranferencia;
-            modelExtrato.NomePagante = view.Nome;
-            modelExtrato.FkIdUsuario = idUsuario;
-            if (view.Saldo >= view.ValorTranferencia)
+            model.Id = view.idReceber;
+            using (MySqlDataReader reader = model.LerUsuario())
             {
-                if (model.AtualizarSaldo())
+                if (reader != null)
                 {
-                    view.Saldo = model.NovoSaldo;
-                    if (modelExtrato.CadastrarExtrato())
+                    if (reader.Read())
                     {
-                        MessageBox.Show("Pagamento feito com sucesso!");
-                        return true;
+                        model.Id = idUsuario;
+                        model.NovoSaldo = view.Saldo - view.ValorTranferencia;
+                        if (view.Saldo >= view.ValorTranferencia)
+                        {
+                            if (model.AtualizarSaldo())
+                            {
+                                view.Saldo = model.NovoSaldo;
+                                MessageBox.Show("Pagamento feito com sucesso!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Erro ao atualizar saldo!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Valor de tranferência inválido!");
+                        }
                     }
                     else
                     {
-                        return false;
+                        MessageBox.Show("Não foi possível ler os dados do usuário.");
                     }
                 }
                 else
                 {
-                    return false;
+                    MessageBox.Show("Erro: reader = null");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Valo da tranferência inválido!");
-                return false;
             }
         }
         public bool receber()
         {
-            model.Id = view.idTranferencia;
+            model.Id = view.idReceber;
 
             using (MySqlDataReader reader = model.LerUsuario())
             {

@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,9 @@ namespace Banco_MVP_MySQL_.Models
         private string nomePagante;
         private string nomeReceber;
         private string motivo;
-        private int dataPagamento;
-        public int fkIdUsuario;
+        private DateTime dataPagamento;
+        private int fkIdPagante;
+        private int fkIdReceber;
 
         public int IdExtrato
         {
@@ -43,15 +45,20 @@ namespace Banco_MVP_MySQL_.Models
             get { return motivo; }
             set { motivo = value; }
         }
-        public int DataPagamento
+        public DateTime DataPagamento
         {
             get { return dataPagamento; }
             set {  dataPagamento = value; }
         }
-        public int FkIdUsuario
+        public int FkIdPagante
         {
-            get { return fkIdUsuario; }
-            set { fkIdUsuario = value; }
+            get { return fkIdPagante; }
+            set { fkIdPagante = value; }
+        }
+        public int FkIdReceber
+        {
+            get { return fkIdReceber; }
+            set { fkIdReceber = value; }
         }
 
         public bool CadastrarExtrato()
@@ -62,7 +69,7 @@ namespace Banco_MVP_MySQL_.Models
                 {
                     MysqlConexaoBanco.Open();
 
-                    string insert = "INSERT INTO extrato (idExtrato, saldoExtrato, nomePagante, nomeReceber, motivo, dataPagamento, fkIdUsuario) VALUES (@IdExtrato, @SaldoExtrato, @NomePagante, @NomeReceber, @Motivo, @DataPagamento, @fkIdUsuario);";
+                    string insert = "INSERT INTO extrato (idExtrato, saldoExtrato, nomePagante, nomeReceber, motivo, dataPagamento, fkIdPagante, fkIdReceber) VALUES (@IdExtrato, @SaldoExtrato, @NomePagante, @NomeReceber, @Motivo, @DataPagamento, @FkIdPagante, @FkIdReceber);";
 
                     using (MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
                     {
@@ -70,9 +77,10 @@ namespace Banco_MVP_MySQL_.Models
                         comandoSql.Parameters.AddWithValue("@SaldoExtrato", SaldoExtrato);
                         comandoSql.Parameters.AddWithValue("@NomePagante", NomePagante);
                         comandoSql.Parameters.AddWithValue("@NomeReceber", NomeReceber);
-                        comandoSql.Parameters.AddWithValue("Motivo", Motivo);
-                        comandoSql.Parameters.AddWithValue("DataPagamento", DataPagamento);
-                        comandoSql.Parameters.AddWithValue("FkIdUsuario", FkIdUsuario);
+                        comandoSql.Parameters.AddWithValue("@Motivo", Motivo);
+                        comandoSql.Parameters.AddWithValue("@DataPagamento", DataPagamento);
+                        comandoSql.Parameters.AddWithValue("@FkIdPagante", FkIdPagante);
+                        comandoSql.Parameters.AddWithValue("@FkIdReceber", FkIdReceber);
 
                         comandoSql.ExecuteNonQuery();
 
@@ -84,6 +92,27 @@ namespace Banco_MVP_MySQL_.Models
             {
                 MessageBox.Show("Erro no banco de dados - Método cadastrarExtrato: " + ex.Message);
                 return false;
+            }
+        }
+
+        public MySqlDataReader LerUsuario()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string select = "SELECT idUsuario, nome, saldo FROM usuario WHERE idUsuario = @Id;";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@Id", FkIdPagante);
+
+                return comandoSql.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - método lerUsuario: " + ex.Message);
+                return null;
             }
         }
     }

@@ -14,6 +14,6 @@ namespace Banco_MVP_MySQL_.Views
         string ConfirmarNovaSenha { get; }
         decimal Saldo { get; set; }
         decimal ValorTranferencia { get; set; }
-        int idTranferencia { get; set; }
+        int idReceber { get; set; }
     }
 }
