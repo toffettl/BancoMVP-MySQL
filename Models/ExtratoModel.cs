@@ -115,5 +115,27 @@ namespace Banco_MVP_MySQL_.Models
                 return null;
             }
         }
+
+        public MySqlDataReader LerExtrato()
+        {
+            try
+            {
+                MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+                MysqlConexaoBanco.Open();
+
+                string select = $"select idExtrato, saldoExtrato, completa, hora from tarefas where fkIdPagante = '{fkIdPagante}' OR fkIdReceber = '{fkIdReceber}';";
+
+                MySqlCommand comandoSql = MysqlConexaoBanco.CreateCommand();
+                comandoSql.CommandText = select;
+
+                MySqlDataReader reader = comandoSql.ExecuteReader();
+                return reader;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - método localizarTarefa: " + ex.Message);
+                return null;
+            }
+        }
     }
 }
