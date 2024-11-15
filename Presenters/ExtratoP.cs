@@ -54,5 +54,26 @@ namespace Banco_MVP_MySQL_.Presenters
                 }
             }
         }
+
+        public void ListarExtrato()
+        {
+            model.IdUsuario = idUsuario;
+            int numExtrato = model.ContarExtrato();
+            for (int i = 0; i <= numExtrato; i++)
+            {
+                model.IdExtrato = i;
+                MySqlDataReader reader = model.LerExtrato();
+                reader.Read();
+                
+                    view.valorExtrato = Convert.ToDecimal(reader["saldoExtrato"]);
+                    view.nomePagante = Convert.ToString(reader["nomePagante"]);
+                    view.nomeReceber = Convert.ToString(reader["nomeReceber"]);
+                    view.dataPagamento = Convert.ToDateTime(reader["dataPagamento"]);
+                    view.fkIdPagante = Convert.ToInt32(reader["fkIdPagante"]);
+                    view.fkIdReceber = Convert.ToInt32(reader["fkIdReceber"]);
+                    view.ListarExtrato();
+                
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Banco_MVP_MySQL_.Models
 {
     internal class ExtratoModel
     {
+        private int idUsuario;
         private int idExtrato;
         private decimal saldoExtrato;
         private string nomePagante;
@@ -60,7 +61,11 @@ namespace Banco_MVP_MySQL_.Models
             get { return fkIdReceber; }
             set { fkIdReceber = value; }
         }
-
+        public int IdUsuario
+        {
+            get { return idUsuario; }
+            set { idUsuario = value; }
+        }
         public bool CadastrarExtrato()
         {
             try
@@ -123,7 +128,7 @@ namespace Banco_MVP_MySQL_.Models
                 MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
                 MysqlConexaoBanco.Open();
 
-                string select = $"select idExtrato, saldoExtrato, completa, hora from tarefas where fkIdPagante = '{fkIdPagante}' OR fkIdReceber = '{fkIdReceber}';";
+                string select = $"select idExtrato, saldoExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber from extrato where fkIdPagante = '{idUsuario}' OR fkIdReceber = '{idUsuario}' AND idExtrato = {idExtrato};";
 
                 MySqlCommand comandoSql = MysqlConexaoBanco.CreateCommand();
                 comandoSql.CommandText = select;
@@ -136,6 +141,26 @@ namespace Banco_MVP_MySQL_.Models
                 MessageBox.Show("Erro no banco de dados - método localizarTarefa: " + ex.Message);
                 return null;
             }
+        }
+
+        public int ContarExtrato()
+        {
+            int count = 0;
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+
+            try
+            {
+                MysqlConexaoBanco.Open();
+                string query = "SELECT COUNT(*) FROM extrato";
+                MySqlCommand comandoSql = new MySqlCommand(query, MysqlConexaoBanco);
+
+                count = Convert.ToInt32(comandoSql.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erro no banco de dados - método contarExtrato: " + ex.Message);
+            }
+            return count;
         }
     }
 }

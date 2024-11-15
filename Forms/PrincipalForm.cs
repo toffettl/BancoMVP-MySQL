@@ -37,7 +37,7 @@ namespace Banco_MVP_MySQL_.Forms
 
         public int idExtrato { get; set; }
         public decimal valorExtrato { get; set; }
-        public string nomePagante => Nome;
+        public string nomePagante { get { return Nome; } set { Nome = value; } }
         public string nomeReceber { get; set; }
         public DateTime dataPagamento { get; set; }
         public int fkIdPagante { get; set; }
@@ -84,15 +84,16 @@ namespace Banco_MVP_MySQL_.Forms
             alterarComponents.AddControles(this);
             alterarComponents.btnAlterarNome.Click += EditarNome;
             alterarComponents.btnAlterarSenha.Click += EditarSenha;
-
-            extratoComponents = new ExtratoComponents();
+            extratoComponents = new ExtratoComponents(valorExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber);
             extratoComponents.AddControles(this);
+            presenterExtrato.ListarExtrato();
         }
 
-        private void RemoverSetas(NumericUpDown numericUpDown) //remove os controles do numericDropDown
+        public void ListarExtrato()
         {
-            numericUpDown.Controls[0].Visible = false;
+            extratoComponents.AddPainel();
         }
+
         private void EditarNome(object sender, EventArgs e)
         {
             if (presenter.EditarNome())

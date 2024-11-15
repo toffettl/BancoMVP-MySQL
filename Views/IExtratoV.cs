@@ -10,10 +10,12 @@ namespace Banco_MVP_MySQL_.Views
     {
         int idExtrato { get; set; }
         decimal valorExtrato { get; set; }
-        string nomePagante { get; }
+        string nomePagante { get; set; }
         string nomeReceber { get; set; }
         DateTime dataPagamento { get; set; }
         int fkIdPagante { get; set; }
         int fkIdReceber { get; set; }
+
+        void ListarExtrato();
     }
 }

@@ -11,6 +11,7 @@ namespace Banco_MVP_MySQL_.Forms
     internal class ExtratoComponents
     {
         FlowLayoutPanel flpExtrato;
+        Panel pnlExtrato;
         Label lblValorExtrato;
         Label lblNomePagante;
         Label lblNomeReceber;
@@ -18,9 +19,16 @@ namespace Banco_MVP_MySQL_.Forms
         Label lblIdPagante;
         Label lblIdReceber;
 
-        public ExtratoComponents()
+        public ExtratoComponents(decimal saldoExtrato, string nomePagante, string nomeReceber, DateTime dataPagamento, int idPagante, int idReceber)
         {
             flpExtrato = new FlowLayoutPanel()
+            {
+                BackColor = Color.Red,
+                Size = new Size(700, 200),
+                Location = new Point(500, 50)
+            };
+
+            pnlExtrato = new Panel()
             {
                 BackColor = Color.Blue,
                 Size = new Size(700, 100),
@@ -29,44 +37,51 @@ namespace Banco_MVP_MySQL_.Forms
 
             lblValorExtrato = new Label()
             {
-                Text = "teste",
+                Text = Convert.ToString(saldoExtrato),
             };
 
             lblNomePagante = new Label()
             {
-                Text = "teste",
+                Text = nomePagante,
             };
 
             lblNomeReceber = new Label()
             {
-                Text = "teste",
+                Text = nomeReceber,
             };
 
             lblDataPagamento = new Label()
             {
-                Text = "teste",
+                Text = Convert.ToString(dataPagamento),
             };
 
             lblIdPagante = new Label()
             {
-                Text = "teste",
+                Text = Convert.ToString(idPagante),
             };
 
             lblIdReceber = new Label()
             {
-                Text = "teste",
+                Text = Convert.ToString(idReceber),
             };
+
+
         }
 
         public void AddControles(Control parent)
         {
             parent.Controls.Add(flpExtrato);
-            flpExtrato.Controls.Add(lblValorExtrato);
-            flpExtrato.Controls.Add(lblNomePagante);
-            flpExtrato.Controls.Add(lblNomeReceber);
-            flpExtrato.Controls.Add(lblDataPagamento);
-            flpExtrato.Controls.Add(lblIdPagante);
-            flpExtrato.Controls.Add(lblIdReceber);
+        }
+
+        public void AddPainel()
+        {
+            flpExtrato.Controls.Add(pnlExtrato);
+            pnlExtrato.Controls.Add(lblValorExtrato);
+            pnlExtrato.Controls.Add(lblNomePagante);
+            pnlExtrato.Controls.Add(lblNomeReceber);
+            pnlExtrato.Controls.Add(lblDataPagamento);
+            pnlExtrato.Controls.Add(lblIdPagante);
+            pnlExtrato.Controls.Add(lblIdReceber);
         }
     }
 }
