@@ -15,7 +15,7 @@ namespace Banco_MVP_MySQL_.Presenters
         private readonly IExtratoV view;
         private readonly ExtratoModel model;
         public int idUsuario;
-        
+
         public ExtratoP(IExtratoV view, ExtratoModel model)
         {
             this.view = view;
@@ -32,7 +32,7 @@ namespace Banco_MVP_MySQL_.Presenters
                     if (reader.Read())
                     {
                         model.NomeReceber = Convert.ToString(reader["nome"]);
-                        model.SaldoExtrato = view.valorExtrato;
+                        model.SaldoExtrato = view.saldoExtrato;
                         model.NomePagante = view.nomePagante;
                         model.FkIdPagante = idUsuario;
                         model.DataPagamento = DateTime.Now;
@@ -57,22 +57,30 @@ namespace Banco_MVP_MySQL_.Presenters
 
         public void ListarExtrato()
         {
-            model.IdUsuario = idUsuario;
+            model.FkIdPagante = idUsuario;
+            model.FkIdReceber = idUsuario;
             int numExtrato = model.ContarExtrato();
-            for (int i = 0; i <= numExtrato; i++)
+            for (int i = 1; i <= numExtrato; i++)
             {
-                model.IdExtrato = i;
-                MySqlDataReader reader = model.LerExtrato();
-                reader.Read();
-                
-                    view.valorExtrato = Convert.ToDecimal(reader["saldoExtrato"]);
+                MySqlDataReader reader = model.LerExtrato(i);
+                while (reader.Read() && i <= numExtrato)
+                {
+                    view.saldoExtrato = Convert.ToDecimal(reader["saldoExtrato"]);
                     view.nomePagante = Convert.ToString(reader["nomePagante"]);
                     view.nomeReceber = Convert.ToString(reader["nomeReceber"]);
                     view.dataPagamento = Convert.ToDateTime(reader["dataPagamento"]);
                     view.fkIdPagante = Convert.ToInt32(reader["fkIdPagante"]);
                     view.fkIdReceber = Convert.ToInt32(reader["fkIdReceber"]);
+                    if (view.fkIdPagante == idUsuario)
+                    {
+                        view.recebeu = false;
+                    }
+                    else
+                    {
+                        view.recebeu = true;
+                    }
                     view.ListarExtrato();
-                
+                }
             }
         }
     }

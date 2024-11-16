@@ -36,12 +36,13 @@ namespace Banco_MVP_MySQL_.Forms
 
 
         public int idExtrato { get; set; }
-        public decimal valorExtrato { get; set; }
+        public decimal saldoExtrato { get; set; }
         public string nomePagante { get { return Nome; } set { Nome = value; } }
         public string nomeReceber { get; set; }
         public DateTime dataPagamento { get; set; }
         public int fkIdPagante { get; set; }
         public int fkIdReceber { get; set; }
+        public bool recebeu {  get; set; }
 
 
         public Label lblId;
@@ -84,14 +85,15 @@ namespace Banco_MVP_MySQL_.Forms
             alterarComponents.AddControles(this);
             alterarComponents.btnAlterarNome.Click += EditarNome;
             alterarComponents.btnAlterarSenha.Click += EditarSenha;
-            extratoComponents = new ExtratoComponents(valorExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber);
+            extratoComponents = new ExtratoComponents();
             extratoComponents.AddControles(this);
             presenterExtrato.ListarExtrato();
         }
 
         public void ListarExtrato()
         {
-            extratoComponents.AddPainel();
+            extratoComponents.AddPainel(saldoExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber, recebeu);
+            Console.WriteLine("Adicionando");
         }
 
         private void EditarNome(object sender, EventArgs e)
@@ -124,7 +126,7 @@ namespace Banco_MVP_MySQL_.Forms
             idReceber = Convert.ToInt32(transferenciaComponents.txtId.Text);
             fkIdReceber = Convert.ToInt32(transferenciaComponents.txtId.Text);
             ValorTranferencia = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
-            valorExtrato = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
+            saldoExtrato = Convert.ToDecimal(transferenciaComponents.txtValor.Text);
             presenter.tranferencia();       
             presenter.receber();           
             presenter.LerUsuario();

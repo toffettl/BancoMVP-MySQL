@@ -121,14 +121,14 @@ namespace Banco_MVP_MySQL_.Models
             }
         }
 
-        public MySqlDataReader LerExtrato()
+        public MySqlDataReader LerExtrato(int id)
         {
             try
             {
                 MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
                 MysqlConexaoBanco.Open();
 
-                string select = $"select idExtrato, saldoExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber from extrato where fkIdPagante = '{idUsuario}' OR fkIdReceber = '{idUsuario}' AND idExtrato = {idExtrato};";
+                string select = $"select saldoExtrato, nomePagante, nomeReceber, dataPagamento, fkIdPagante, fkIdReceber from extrato where idExtrato = {id} and (fkIdPagante = {fkIdPagante} or fkIdReceber = {fkIdPagante})";
 
                 MySqlCommand comandoSql = MysqlConexaoBanco.CreateCommand();
                 comandoSql.CommandText = select;
