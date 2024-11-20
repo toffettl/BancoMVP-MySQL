@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace Banco_MVP_MySQL_.Forms
 {
-    public partial class PrincipalForm : Form, IPrincipalV, IExtratoV
+    public partial class PrincipalForm : Form, IPrincipalV, IExtratoV, ICaixaV
     {
         private readonly LoginUsuarioM modelLogin;
         private readonly PrincipalP presenter;
@@ -44,6 +44,8 @@ namespace Banco_MVP_MySQL_.Forms
         public int fkIdReceber { get; set; }
         public bool recebeu {  get; set; }
 
+        public string NomeCaixa { get; set; }
+        public int SaldoCaixa { get; set; }
 
         public Label lblId;
         public Label lblSaldo;
@@ -62,6 +64,7 @@ namespace Banco_MVP_MySQL_.Forms
         private TransferenciaComponents transferenciaComponents;
         private AlterarComponents alterarComponents;
         private ExtratoComponents extratoComponents;
+        private CaixaComponents caixaComponents;
         public PrincipalForm(int idUsuario)
         {
             InitializeComponent();
@@ -88,6 +91,9 @@ namespace Banco_MVP_MySQL_.Forms
             extratoComponents = new ExtratoComponents();
             extratoComponents.AddControles(this);
             presenterExtrato.ListarExtrato();
+
+            caixaComponents = new CaixaComponents();
+            caixaComponents.AddControles(this);
         }
 
         public void ListarExtrato()

@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="ConexaoBanco.cs" />
     <Compile Include="Forms\AlterarComponents.cs" />
+    <Compile Include="Forms\CaixaComponents.cs" />
     <Compile Include="Forms\ExtratoComponents.cs" />
     <Compile Include="Forms\LoginCadastro\CadastroForm.cs">
       <SubType>Form</SubType>
@@ -121,8 +122,10 @@
     <Compile Include="Forms\PrincipalForm.Designer.cs">
       <DependentUpon>PrincipalForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\CaixaModel.cs" />
     <Compile Include="Models\ExtratoModel.cs" />
     <Compile Include="Models\PrincipalModel.cs" />
+    <Compile Include="Presenters\CaixaP.cs" />
     <Compile Include="Presenters\ExtratoP.cs" />
     <Compile Include="Views\ICadastrUsuarioV.cs" />
     <Compile Include="Models\CadastroLogin\CadastroUsuarioM.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Presenters\PrincipalP.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ICaixaV.cs" />
     <Compile Include="Views\IExtratoV.cs" />
     <Compile Include="Views\ILoginUsuarioV.cs" />
     <Compile Include="Views\IPrincipalV.cs" />
