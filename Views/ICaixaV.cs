@@ -8,7 +8,11 @@ namespace Banco_MVP_MySQL_.Views
 {
     internal interface ICaixaV
     {
-        string NomeCaixa {  get; }
-        int SaldoCaixa {  get; }
+        int IdCaixa { get; set; }
+        int IdPermissao { get; set; }
+        string NomeCaixa { get; set; }
+        int SaldoCaixa { get; set; }
+
+        void ListarCaixa();
     }
 }

@@ -23,6 +23,8 @@ namespace Banco_MVP_MySQL_.Forms
         private readonly PrincipalModel model;
         private readonly ExtratoModel extratoModel;
         private readonly ExtratoP presenterExtrato;
+        private readonly CaixaModel caixaModel;
+        private readonly CaixaP presenterCaixa;
 
         public int idUsuario;
 
@@ -46,6 +48,8 @@ namespace Banco_MVP_MySQL_.Forms
 
         public string NomeCaixa { get; set; }
         public int SaldoCaixa { get; set; }
+        public int IdCaixa { get; set; }
+        public int IdPermissao { get; set; }
 
         public Label lblId;
         public Label lblSaldo;
@@ -92,8 +96,38 @@ namespace Banco_MVP_MySQL_.Forms
             extratoComponents.AddControles(this);
             presenterExtrato.ListarExtrato();
 
-            caixaComponents = new CaixaComponents();
+            caixaModel = new CaixaModel();
+            presenterCaixa = new CaixaP(this, caixaModel);
+            presenterCaixa.idUsuario = idUsuario;
+            caixaComponents = new CaixaComponents(this);
             caixaComponents.AddControles(this);
+            caixaComponents.btnAdicionarCaixa.Click += AdiconarCaixa;
+            presenterCaixa.ListarCaixa();
+        }
+
+        public void AddPermissao(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            IdCaixa = Convert.ToInt32(btn.Tag);
+            MessageBox.Show($"IdCaixa: {IdCaixa}");
+
+            Panel pnlCaixa = btn.Parent as Panel;
+            TextBox txtIdPermissao = pnlCaixa.Controls.OfType<TextBox>().FirstOrDefault();
+            IdPermissao = Convert.ToInt32(txtIdPermissao.Text);
+            MessageBox.Show($"IdPermissao: {IdPermissao}");
+            presenterCaixa.AddPermissao();
+        }
+
+        public void ListarCaixa()
+        {
+            caixaComponents.AddCaixa(NomeCaixa, IdCaixa, SaldoCaixa);
+        }
+        public void AdiconarCaixa(object sender, EventArgs e)
+        {
+            NomeCaixa = caixaComponents.txtNomeCaixa.Text;
+            presenterCaixa.CadastrarCaixa();
+            caixaComponents.flpCaixa.Controls.Clear();
+            presenterCaixa.ListarCaixa();
         }
 
         public void ListarExtrato()

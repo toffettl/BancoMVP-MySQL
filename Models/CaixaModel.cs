@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,15 +51,12 @@ namespace Banco_MVP_MySQL_.Models
                 {
                     MysqlConexaoBanco.Open();
 
-                    string insert = $"INSERT INTO caixa (idCaixa, nomeCaixa) VALUES (@idCaixa, @nomeCaixa);" +
-                                    $"INSERT INTO usuarioCaixa (fkIdUsuario, fkIdCaixa) VALUES (@fkIdUsuario, @fkIdCaixa);";
+                    string insert = "INSERT INTO caixa (idCaixa, nomeCaixa) VALUES (@idCaixa, @nomeCaixa);";
 
                     using(MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
                     {
                         comandoSql.Parameters.AddWithValue("@idCaixa", IdCaixa);
                         comandoSql.Parameters.AddWithValue("@nomeCaixa", nomeCaixa);
-                        comandoSql.Parameters.AddWithValue("@fkIdUsuario", FkIdUsuario);
-                        comandoSql.Parameters.AddWithValue("@fkIdCaixa", FkIdCaixa);
 
                         comandoSql.ExecuteNonQuery();
                     }
@@ -69,6 +67,82 @@ namespace Banco_MVP_MySQL_.Models
             {
                 MessageBox.Show("Erro no método: CadastrarCaixa" + ex.Message);
                 return false;
+            }
+        }
+        public bool CadastrarPermissao()
+        {
+            try
+            {
+                using (MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor))
+                {
+                    MysqlConexaoBanco.Open();
+
+                    string insert = "INSERT INTO usuarioCaixa (fkIdUsuario, fkIdCaixa) VALUES (@fkIdUsuario, @fkIdCaixa);";
+
+                    using (MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
+                    {
+                        comandoSql.Parameters.AddWithValue("@fkIdUsuario", FkIdUsuario);
+                        comandoSql.Parameters.AddWithValue("@fkIdCaixa", fkIdCaixa);
+
+                        comandoSql.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no método: CadastrarPermissao" + ex.Message);
+                return false;
+            }
+        }
+
+        public MySqlDataReader VerificarPermissao()
+        {
+            try
+            {
+                MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+                MysqlConexaoBanco.Open();
+
+                string select = @"
+            SELECT c.nomeCaixa, c.saldoCaixa, c.idCaixa
+            FROM usuarioCaixa uc
+            JOIN caixa c ON uc.fkIdCaixa = c.idCaixa
+            WHERE uc.fkIdUsuario = @fkIdUsuario";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@fkIdUsuario", FkIdUsuario);
+
+                return comandoSql.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no método VerificarPermissao: " + ex.Message);
+                return null;
+            }
+        }
+
+        public MySqlDataReader ListarCaixasPorUsuario()
+        {
+            try
+            {
+                MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+                MysqlConexaoBanco.Open();
+
+                string select = @"
+            SELECT c.idCaixa, c.nomeCaixa, c.saldoCaixa
+            FROM caixa c
+            JOIN usuarioCaixa uc ON c.idCaixa = uc.fkIdCaixa
+            WHERE uc.fkIdUsuario = @fkIdUsuario";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@fkIdUsuario", FkIdUsuario);
+
+                return comandoSql.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no método ListarCaixasPorUsuario: " + ex.Message);
+                return null;
             }
         }
     }
