@@ -11,7 +11,7 @@ namespace Banco_MVP_MySQL_.Views
         int IdCaixa { get; set; }
         int IdPermissao { get; set; }
         string NomeCaixa { get; set; }
-        int SaldoCaixa { get; set; }
+        decimal SaldoCaixa { get; set; }
 
         void ListarCaixa();
     }

@@ -80,5 +80,48 @@ namespace Banco_MVP_MySQL_.Presenters
                 MessageBox.Show("Erro");
             }
         }
+
+        public void AddSaldo()
+        {
+            model.IdCaixa = view.IdCaixa;
+            using (MySqlDataReader reader = model.LerCaixa())
+            {
+                if (reader.Read())
+                {
+                    int saldoAtual = Convert.ToInt32(reader["saldoCaixa"]);
+                    model.NovoSaldoCaixa = saldoAtual + view.SaldoCaixa;
+                    if (model.AtualizarCaixa())
+                    {
+                        MessageBox.Show("Saldo adicionado com sucesso!");
+                        AtualizarSaldo();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao atualizar saldo!");
+                    }
+                }
+            }
+        }
+
+        public void AtualizarSaldo()
+        {
+            model.FkIdUsuario = idUsuario;
+            using (MySqlDataReader reader = model.LerUsuario())
+            {
+                if (reader.Read())
+                {
+                    decimal saldoAtual = Convert.ToDecimal(reader["saldo"]);
+                    model.NovoSaldo = saldoAtual - view.SaldoCaixa;
+                    if (model.AtualizarSaldo())
+                    {
+                        MessageBox.Show("Saldo adicionado com sucesso!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erro ao atualizar saldo!");
+                    }
+                }
+            }
+        }
     }
 }

@@ -47,23 +47,9 @@ namespace Banco_MVP_MySQL_.Forms
         public bool recebeu {  get; set; }
 
         public string NomeCaixa { get; set; }
-        public int SaldoCaixa { get; set; }
+        public decimal SaldoCaixa { get; set; }
         public int IdCaixa { get; set; }
         public int IdPermissao { get; set; }
-
-        public Label lblId;
-        public Label lblSaldo;
-        public Panel pnlMenu;
-        public Panel pnlInicio;
-        public Panel pnlSaldo;
-        public Label lblpnlSaldo;
-        public Panel pnlDadosUsuario;
-        public Label lblNomeUsuario;
-        public Button btnCopiarId;
-        public Button btnabrirTransferencia;
-        public Panel pnlTransferencia;
-        public Button btnEditarUsuario;
-        public Panel pnlEditarUsuario;
 
         private TransferenciaComponents transferenciaComponents;
         private AlterarComponents alterarComponents;
@@ -103,6 +89,32 @@ namespace Banco_MVP_MySQL_.Forms
             caixaComponents.AddControles(this);
             caixaComponents.btnAdicionarCaixa.Click += AdiconarCaixa;
             presenterCaixa.ListarCaixa();
+        }
+
+        public void AddSaldoCaixa(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            IdCaixa = Convert.ToInt32(btn.Tag);
+            MessageBox.Show($"IdCaixa: {IdCaixa}");
+
+            // Aqui, estamos buscando o segundo TextBox dentro do painel (o txtSaldo)
+            Panel pnlCaixa = btn.Parent as Panel;
+
+            // Procurar o segundo TextBox, que é o txtSaldo
+            TextBox txtSaldo = pnlCaixa.Controls.OfType<TextBox>().Skip(1).FirstOrDefault();  // Skip(1) pula o primeiro TextBox (txtIdPermissao)
+
+            if (txtSaldo != null)
+            {
+                SaldoCaixa = Convert.ToDecimal(txtSaldo.Text);
+                MessageBox.Show($"Saldo: {SaldoCaixa}");
+            }
+            else
+            {
+                MessageBox.Show("Não foi possível encontrar o TextBox de saldo.");
+            }
+
+            // Chama o método do Presenter para atualizar o saldo
+            presenterCaixa.AddSaldo();
         }
 
         public void AddPermissao(object sender, EventArgs e)
@@ -171,34 +183,7 @@ namespace Banco_MVP_MySQL_.Forms
             presenter.receber();           
             presenter.LerUsuario();
             presenterExtrato.CadastrarExtrato();
-        }
-
-        private void CopiarId(object sender, EventArgs e)
-        {
-            Clipboard.SetText(Convert.ToString(presenter.idUsuario));
-        }
-
-        private void AbrirTransferencia(object sender, EventArgs e)
-        {
-            pnlInicio.Visible = false;
-            pnlTransferencia.Visible = true;
-        }
-        private void AbrirEditar(object sender, EventArgs e)
-        {
-            if (pnlEditarUsuario.Visible == false)
-            {
-                pnlEditarUsuario.Visible = true;
-                pnlInicio.Visible = false;
-                pnlEditarUsuario.Controls.Add(btnEditarUsuario);
-                btnEditarUsuario.Location = new Point(0, 100);
-            }
-            else
-            {
-                pnlDadosUsuario.Controls.Add(btnEditarUsuario);
-                pnlInicio.Visible = true;
-                btnEditarUsuario.Location = new Point(10, 160);
-                pnlEditarUsuario.Visible = false;
-            }
+            ListarExtrato();
         }
     }
 }

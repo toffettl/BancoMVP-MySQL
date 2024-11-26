@@ -46,7 +46,7 @@ namespace Banco_MVP_MySQL_.Forms
             parent.Controls.Add(btnAdicionarCaixa);
             parent.Controls.Add(txtNomeCaixa);
         }
-        public void AddCaixa(string nomeCaixa, int idBtn, int saldoCaixa)
+        public void AddCaixa(string nomeCaixa, int idBtn, decimal saldoCaixa)
         {
             Panel pnlCaixa = new Panel()
             {
@@ -73,12 +73,27 @@ namespace Banco_MVP_MySQL_.Forms
                 Text = "Adicionar Permissão",
                 Tag = idBtn, 
             };
+            TextBox txtSaldo = new TextBox()
+            {
+                Location = new Point(200, 20),
+                Size = new Size(100, 50),
+            };
+            Button btnSaldo = new Button()
+            {
+                Location = new Point(100, 40),
+                Size = new Size(100, 50),
+                Text = "Adicionar dineiro",
+                Tag = idBtn,
+            };
 
             btnPermissao.Click += (sender, e) => principalForm.AddPermissao(sender, e);
+            btnSaldo.Click += (sender, e) => principalForm.AddSaldoCaixa(sender, e);
 
             pnlCaixa.Controls.Add(lblNomeCaixa);
             pnlCaixa.Controls.Add(txtIdPermissao);
             pnlCaixa.Controls.Add(btnPermissao);
+            pnlCaixa.Controls.Add(txtSaldo);
+            pnlCaixa.Controls.Add(btnSaldo);
             flpCaixa.Controls.Add(pnlCaixa);
         }
     }

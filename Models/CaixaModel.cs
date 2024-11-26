@@ -13,9 +13,11 @@ namespace Banco_MVP_MySQL_.Models
     {
         private int idCaixa;
         private string nomeCaixa;
-        private int saldoCaixa;
+        private decimal saldoCaixa;
         private int fkIdUsuario;
         private int fkIdCaixa;
+        private decimal novoSaldo;
+        private decimal novoSaldoCaixa;
 
         public int IdCaixa
         {
@@ -27,7 +29,7 @@ namespace Banco_MVP_MySQL_.Models
             get { return nomeCaixa; }
             set { nomeCaixa = value; }
         }
-        public int SaldoCaixa
+        public decimal SaldoCaixa
         {
             get { return saldoCaixa; }
             set { saldoCaixa = value; }
@@ -42,6 +44,16 @@ namespace Banco_MVP_MySQL_.Models
             get { return fkIdCaixa; }
             set { fkIdCaixa = value; }
         }
+        public decimal NovoSaldo
+        {
+            get { return novoSaldo; }
+            set { novoSaldo = value; }
+        }
+        public decimal NovoSaldoCaixa
+        {
+            get { return novoSaldoCaixa; }
+            set { novoSaldoCaixa = value; }
+        }
 
         public bool CadastrarCaixa()
         {
@@ -51,12 +63,13 @@ namespace Banco_MVP_MySQL_.Models
                 {
                     MysqlConexaoBanco.Open();
 
-                    string insert = "INSERT INTO caixa (idCaixa, nomeCaixa) VALUES (@idCaixa, @nomeCaixa);";
+                    string insert = "INSERT INTO caixa (idCaixa, nomeCaixa, saldoCaixa) VALUES (@idCaixa, @nomeCaixa, @saldoCaixa);";
 
                     using(MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
                     {
                         comandoSql.Parameters.AddWithValue("@idCaixa", IdCaixa);
                         comandoSql.Parameters.AddWithValue("@nomeCaixa", nomeCaixa);
+                        comandoSql.Parameters.AddWithValue("@saldoCaixa", 0);
 
                         comandoSql.ExecuteNonQuery();
                     }
@@ -143,6 +156,125 @@ namespace Banco_MVP_MySQL_.Models
             {
                 MessageBox.Show("Erro no método ListarCaixasPorUsuario: " + ex.Message);
                 return null;
+            }
+        }
+
+        public bool AddSaldo()
+        {
+            try
+            {
+                using (MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor))
+                {
+                    MysqlConexaoBanco.Open();
+
+                    string insert = "UPDATE caixa SET saldoCaixa = @saldoCaixa WHERE idCaixa = @idCaixa;";
+
+                    using (MySqlCommand comandoSql = new MySqlCommand(insert, MysqlConexaoBanco))
+                    {
+                        comandoSql.Parameters.AddWithValue("@saldoCaixa", saldoCaixa);
+                        comandoSql.Parameters.AddWithValue("@idCaixa", idCaixa);
+
+                        comandoSql.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no método: AddSaldo" + ex.Message);
+                return false;
+            }
+        }
+
+        public bool AtualizarSaldo()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string update = "update usuario set saldo = @NovoSaldo where idUsuario = @idUsuario;";
+
+                MySqlCommand comandoSql = new MySqlCommand(update, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@NovoSaldo", NovoSaldo);
+                comandoSql.Parameters.AddWithValue("@idUsuario", fkIdUsuario);
+
+
+                comandoSql.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - Método transferirValor: " + ex);
+                return false;
+            }
+        }
+
+        public MySqlDataReader LerUsuario()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string select = "SELECT saldo FROM usuario WHERE idUsuario = @idUsuario;";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@idUsuario", fkIdUsuario);
+
+                return comandoSql.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - método lerUsuario: " + ex.Message);
+                return null;
+            }
+        }
+
+        public MySqlDataReader LerCaixa()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string select = "SELECT saldoCaixa FROM caixa WHERE idCaixa = @idCaixa;";
+
+                MySqlCommand comandoSql = new MySqlCommand(select, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@idCaixa", idCaixa);
+
+                return comandoSql.ExecuteReader(CommandBehavior.CloseConnection);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - método lerUsuario: " + ex.Message);
+                return null;
+            }
+        }
+
+        public bool AtualizarCaixa()
+        {
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            try
+            {
+                MysqlConexaoBanco.Open();
+
+                string update = "update caixa set saldoCaixa = @NovoSaldoCaixa where idCaixa = @idCaixa;";
+
+                MySqlCommand comandoSql = new MySqlCommand(update, MysqlConexaoBanco);
+                comandoSql.Parameters.AddWithValue("@NovoSaldoCaixa", NovoSaldoCaixa);
+                comandoSql.Parameters.AddWithValue("@idCaixa", idCaixa);
+
+
+                comandoSql.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro no banco de dados - Método transferirValor: " + ex);
+                return false;
             }
         }
     }
