@@ -69,7 +69,7 @@ namespace Banco_MVP_MySQL_.Models
                     {
                         comandoSql.Parameters.AddWithValue("@idCaixa", IdCaixa);
                         comandoSql.Parameters.AddWithValue("@nomeCaixa", nomeCaixa);
-                        comandoSql.Parameters.AddWithValue("@saldoCaixa", 0);
+                        comandoSql.Parameters.AddWithValue("@saldoCaixa", 0);/
 
                         comandoSql.ExecuteNonQuery();
                     }
