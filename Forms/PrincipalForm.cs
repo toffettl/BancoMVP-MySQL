@@ -97,10 +97,8 @@ namespace Banco_MVP_MySQL_.Forms
             IdCaixa = Convert.ToInt32(btn.Tag);
             MessageBox.Show($"IdCaixa: {IdCaixa}");
 
-            // Aqui, estamos buscando o segundo TextBox dentro do painel (o txtSaldo)
             Panel pnlCaixa = btn.Parent as Panel;
 
-            // Procurar o segundo TextBox, que é o txtSaldo
             TextBox txtSaldo = pnlCaixa.Controls.OfType<TextBox>().Skip(1).FirstOrDefault();  // Skip(1) pula o primeiro TextBox (txtIdPermissao)
 
             if (txtSaldo != null)
@@ -113,7 +111,6 @@ namespace Banco_MVP_MySQL_.Forms
                 MessageBox.Show("Não foi possível encontrar o TextBox de saldo.");
             }
 
-            // Chama o método do Presenter para atualizar o saldo
             presenterCaixa.AddSaldo();
         }
 
